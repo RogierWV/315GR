@@ -1,0 +1,20 @@
+language: c
+
+install:
+- sudo apt-get install cmake mono-devel mono-gmcs unzip
+- wget https://github.com/downloads/inkdev/CryMono/xunit-1.9.1.zip
+- unzip xunit-1.9.1.zip
+
+
+script:
+- echo "-- START MAIN BUILD --"
+- xbuild CryBrary/CryBrary.csproj
+- echo "-- START TEST BUILD --"
+- xbuild CryBrary.Tests/CryBrary.Tests.csproj
+- echo "-- START TEST RUN --"
+- mono xunit.console.clr4.exe CryBrary.Tests/bin/Debug/CryBrary.Tests.dll
+- echo "-- Done --"
+
+notifications:
+  email: false
+  webhooks: http://crymono.apphb.com/notify/travisci
